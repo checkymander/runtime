@@ -18,8 +18,11 @@ jobs:
         uses: actions/checkout@v3
 
       # Build Docker image
+      - name: ls
+        run: ls
+
       - name: Build Docker Image
-        run: docker build -t custom-dotnet .
+        run: docker build -t custom-dotnet .github/workflows/Dockerfile
 
       # Run Docker container and execute commands
       - name: Run Tests Inside Docker
