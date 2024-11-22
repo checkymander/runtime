@@ -22,14 +22,14 @@ jobs:
 
       # Run Docker container and execute commands
       - name: Run .NET build inside of Docker
-        run: docker run custom-dotnet
+        run: docker run --name custom-build custom-dotnet
 
       # Extract artifacts from the container
       - name: Copy Artifacts
         run: |
-          docker cp custom-dotnet:/opt/dotnet/artifacts ./artifacts
-          docker stop custom-dotnet
-          docker rm custom-dotnet
+          docker cp custom-build:/opt/dotnet/artifacts ./artifacts
+          docker stop custom-build
+          docker rm custom-build
 
       # Upload artifacts
       - name: Upload Artifacts
