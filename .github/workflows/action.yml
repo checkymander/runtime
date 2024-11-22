@@ -17,19 +17,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Build Docker
       - name: Build Docker Image
         run: docker build -t custom-dotnet .
 
       # Run Docker container and execute commands
       - name: Run .NET build inside of Docker
-        run: docker run --name custom-build custom-dotnet
+        run: docker run --name dotnet-build custom-dotnet
 
       # Extract artifacts from the container
       - name: Copy Artifacts
         run: |
-          docker cp custom-build:/opt/dotnet/artifacts ./artifacts
-          docker stop custom-build
-          docker rm custom-build
+          docker cp dotnet-build:/opt/dotnet/artifacts ./artifacts
+          docker stop dotnet-build
+          docker rm dotnet-build
+
+      # Compress artifacts into a zip file
+      - name: Zip Artifacts
+        run: zip -r artifacts.zip ./artifacts
 
       # Upload artifacts
       - name: Upload Artifacts
