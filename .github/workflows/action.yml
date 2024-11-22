@@ -21,10 +21,8 @@ jobs:
         run: docker build -t custom-dotnet .
 
       # Run Docker container and execute commands
-      - name: Run Tests Inside Docker
-        run: |
-          docker run custom-dotnet
-          "
+      - name: Run .NET build inside of Docker
+        run: docker run custom-dotnet
 
       # Extract artifacts from the container
       - name: Copy Artifacts
